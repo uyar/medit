@@ -1,0 +1,26 @@
+Source: medit
+Section: editors
+Priority: optional
+Maintainer: Jose G. López <josgalo@gmail.com>
+Build-Depends: debhelper (>= 9), dh-autoreconf,
+ pkg-config,
+ libxml-parser-perl, libxml2-dev, intltool,
+ libgtk2.0-dev,
+ python, python-dev, python-gtk2-dev, python-cairo-dev, python-support
+Standards-Version: 3.9.4
+Homepage: http://mooedit.sourceforge.net/
+
+Package: medit
+Architecture: any
+Depends: ${shlibs:Depends}, ${python:Depends}, ${misc:Depends}
+Description: Useful programming and around-programming text editor
+ Features:
+  * Configurable syntax highlighting.
+  * Configurable keyboard accelerators.
+  * Multiplatform - works both on unix and windows.
+  * Plugins: can be written in C or Python.
+  * Configurable tools available from the main and context menus. They can be
+    written in Python, or it can be a shell script, or in MooScript - simple
+    builtin scripting lanugage.
+  * Regular expression search/replace, grep and find frontends, builtin file
+    selector and whatnot.

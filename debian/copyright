@@ -1,0 +1,208 @@
+This package was debianized by Arthur Loiret <arthur.loiret@gmail.com> on
+Sun,  8 Apr 2007 22:47:29 +0200.
+
+It was downloaded from http://mooedit.sourceforge.net/
+
+Upstream Author: Yevgen Muntyan <muntyan@tamu.edu>
+
+Copyright © 2004-2006 Yevgen Muntyan <muntyan@tamu.edu>
+Copyright © 2003 Gustavo Giráldez <gustavo.giraldez@gmx.net>
+Copyright © 2000-2005 Paolo Maggi <paolo.maggi@polito.it>
+Copyright © 2002,2003 Jeroen Zwartepoorte
+Copyright © 2005-2006, Marco Barisione <marco@barisione.org>
+Copyright © 2005,2006 Emanuele Aina
+Copyright © 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+Copyright © 1998 David Abilleira Freijeiro <odaf@nexo.es>
+Copyright © 2004, Matthias Clasen <mclasen@redhat.com>
+Copyright © 1998-2004 Red Hat, Inc.
+Copyright © 1999, 2000 Scott Wimer
+Copyright © 2006 Alexander Larsson <alexl@redhat.com>
+Copyright © 2000-2003 Ximian Inc.
+Copyright © 2006, Kevin Krammer <kevin.krammer@gmx.at>
+Copyright © 2006, Jeremy White <jwhite@codeweavers.com>
+Copyright © 2003 Francesco Gigli <jaramir@aruba.it>
+Copyright © 2004 David A Knight <david@ritter.demon.co.uk>
+Copyright © 2005 Rowan Lewis <rowanjl@gmail.com>
+Copyright © 2006 Steve Frécinaux <steve@istique.net>
+Copyright © 2007 Patryk Zawadzki <patrys@pld-linux.org>
+Copyright © 2003 John Luke <jluke@cfl.rr.com>
+Copyright © 2004 Alessio Frusciante <algol@firenze.linux.it>
+Copyright © 2005 Brion Vibber <brion@pobox.com>
+Copyright © 2005 Riccardo Lancellotti <riccardo@weblab.ing.unimo.it>
+Copyright © 2004 Benoît Dejean <TaZForEver@free.fr>
+Copyright © 2006, 2007 Steve Frécinaux <code@istique.net>
+Copyright © 2005-2007 Marco Barisione <barisione@gmail.com>
+Copyright © 2005 Silian Della Ragione <silian87@gechi.it>
+Copyright © 2006, 2007 Joachim Noreiko <jnoreiko@yahoo.com>
+Copyright © 2006-2007 GtkSourceView team
+Copyright © 2007 Konstantin Ryabitsev <icon@fedoraproject.org>
+Copyright © 2005 Jacob Ilsø Christensen <jacobilsoe@gmail.com>
+Copyright © 2005 Paolo Borelli <pborelli@katamail.com>
+Copyright © 2005 Jürg Billeter <j@bitron.ch>
+Copyright © 2006-2007 GtkSourceView team
+Copyright © 2005 Link M Dupont <link@subpop.net>
+Copyright © 2005 Andrew Johnson <acjgenius@earthlink.net>
+Copyright © 2005 Antonio Ognio <gnrfan@gnrfan.org>
+Copyright © 2005 Vaidotas Zemlys <mpiktas@gmail.com>
+Copyright © 2004, 2007 Duncan Coutts <duncan@haskell.org>
+Copyright © 2004 Anders Carlsson <andersca@gnome.org>
+Copyright © 2006 Martin Szulecki <compiz@sukimashita.com>
+Copyright © 2004 Andrew Johnson <acjgenius@earthlink.net>
+Copyright © 2005 Thierry Moisan <thierryn@videotron.ca>
+Copyright © 2003, 2005 Evert Verhellen <evert.verhellen@advalvas.be>
+Copyright © 2006 Søren Hauberg <soren@hauberg.org>
+Copyright © 2006 Muthiah Annamalai <gnumuthu@users.sf.net>
+Copyright © 2004 Archit Baweja <bighead@users.sourceforge.net>
+Copyright © 2005 Michael Witrant <mike@lepton.fr>
+Copyright © 2006 Gabriel Bauman <gbauman@gmail.com>
+Copyright © 2005-2007 Marco Barisione <barisione@gmail.com>
+Copyright © 2005 Paolo Maggi <paolo@gnome.org>
+Copyright © 2004 Scott Martin <scott@coffeeblack.org>
+Copyright © 2004 Bjørn Lindeijer <bjorn@lindeijer.nl>
+Copyright © 2003 Paolo Maggi
+Copyright © 2007 Paolo Borelli
+Copyright © 2004 Pawe W. Olszta <pawel.olszta@nemerle.org>
+Copyright © 2003 Antonio Ognio Cesti <antonio@linux.org.pe>
+Copyright © 2006 Sebastian Dröge <slomo@circular-chaos.org>
+Copyright © 2007, Mario Carrión, <mario@monouml.org>
+Copyright © 2005 Paolo Borelli <pborelli@katamail.com>
+Copyright © 2005 Ricardo Lenz
+Copyright © 2004 Scott Martin <scott@coffeeblack.org>
+Copyright © 2005 Stef Walter (formerly Nate Nielsen) <stef@memberwebs.com>
+Copyright © 2004, 2005, 2006 John Spray <jcs116@york.ac.uk>
+Copyright © 2005 Jerry DeLisle <jvdelisle@verizon.net>
+Copyright © 2007 Duncan Coutts <duncan@haskell.org>
+Copyright © 2003 Michael Terry <mike@mterry.name>
+Copyright © 2004 Benoît Dejean <tazforever@dlfp.org>
+Copyright © 2007 Eric Cooper <ecc@cmu.edu>
+Copyright © 2007 Eric Norige <thelema314@gmail.com>
+Copyright © 2004 John Luke <jluke@cfl.rr.com>
+Copyright © 2004 Travis A. Snoozy
+Copyright © 2007 Duncan Coutts <duncan@haskell.org>
+Copyright © 2006 Luca Cavalli <lcavalli@cvs.gnome.org>
+Copyright © 2003-2007 Paolo Borelli
+Copyright © 2006 Jeff Walden <jwalden@mit.edu>
+Copyright © 2007 - Gustavo Giráldez and Paolo Maggi
+Copyright © 2003 - Gustavo Giráldez
+Copyright © 2003-2007 - Paolo Maggi <paolo@gnome.org>
+Copyright © 2007 Novell, Inc.
+Copyright © 1995, 1996, 1997 by Ulrich Drepper <drepper@gnu.ai.mit.edu>
+
+
+Licenses:
+
+    medit is distributed under GPL licence, its text you can
+    find in COPYING.GPL file. Nevertheless, everything but
+    several lang files (see list below) is under LGPL, see
+    COPYING file.
+
+    Portions of code are written not by me, those are clearly
+    marked as such (copyright headers in files copied from other
+    projects, or comments in source). Below is the list of
+    thrid-party files/code with their copyrights and licenses.
+
+    If you want to use my code and LGPL doesn't work for you
+    because you have special clause in your license which is not
+    LGPL-compatible, or other garbage like that, I will gladly
+    release it under double license, or do something like that.
+    Just tell me what exactly is needed.
+
+    If you aren't too picky about legal stuff, then you can simply
+    take code and use it in free software as you like, provided
+    you leave the copyright and project name in there (unless it's a
+    small portion of code of course, simple copy/paste must be free
+    as in WTFL). This applies to all files (and only to those) which
+    do have copyright notice inside; WTFL will work fine for the rest.
+
+On Debian systems, the complete text of the GNU General
+Public License and the GNU Lesser General Public License 
+can be found in `/usr/share/common-licenses/'.
+
+
+Third-party stuff, for debian/copyright. Everything below
+is under LGPL unless noted otherwise.
+
+moo/mooutils/moofontsel.h:
+moo/mooutils/moofontsel.c:
+    GTK font selector modified to show monospace fonts
+    © 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+
+moo/mooterm/pty.h:
+moo/mooterm/pty.c:
+    VTE terminal code modified to work under BSD.
+    © 2001,2002 Red Hat, Inc.
+
+mooterm/mooterm-input.c, moo_term_key_press():
+    VTE terminal code.
+    © 2001-2004 Red Hat, Inc.
+
+moo/mooutils/mooencodings-data.h:
+    © 2002 Red Hat, Inc.
+    © 2000-2002 Free Software Foundation, Inc.
+
+moo/mooapp/smclient/*: - eggsmclient library
+    © 2007 Novell, Inc.
+
+moo/mooutils/pcre/*: pcre library by by Philip Hazel
+    BSD-licensed, © 1997-2006 University of Cambridge
+
+moo/mooedit/gtksourceview/upstream/*:
+moo/mooedit/language-specs/*:
+    gtksourceview library
+    Written over many years by many people, see the files.
+
+    Among those, GPL'ed files:
+        moo/mooedit/language-specs/gtkrc.lang
+        moo/mooedit/language-specs/ini.lang
+        moo/mooedit/language-specs/lua.lang
+        moo/mooedit/language-specs/msil.lang
+        moo/mooedit/language-specs/nemerle.lang
+        moo/mooedit/language-specs/pascal.lang
+        moo/mooedit/language-specs/php.lang
+        moo/mooedit/language-specs/python.lang
+        moo/mooedit/language-specs/R.lang
+        moo/mooedit/language-specs/ruby.lang
+
+moo/moopython/codegen/*: pygtk codegen
+    © 2004 Gustavo Carneiro <gjc@gnome.org>
+    © ???? James Henstridge <james@daa.com.au>
+    © ???? Johan Dahlin <johan@gnome.org>
+
+moo/moopython/pygtk/goocanvas/*: GooCanvas library
+    © 2005-2007 Damon Chaplin
+
+moo/moopython/pygtk/pygoocanvas/*: pygoocanvas
+    © 2006,2007 Gian Mario Tagliaretti <gianmt@gnome.org>
+    © 2006,2007 Gustavo J. A. M. Carneiro <gjc@inescporto.pt>
+
+moo/mooutils/xdgmime/*: xdgmime library
+    © 2003,2004  Red Hat, Inc.
+    © 2003,2004  Jonathan Blandford <jrb@alum.mit.edu>
+
+moo/xdg-utils:
+    Looks like some sort of BSD license
+    © 2006 Kevin Krammer <kevin.krammer@gmx.at>
+    © 2006 Jeremy White <jwhite@codeweavers.com>
+
+moo/mooutils/newgtk/glib-2.8/glib/gmappedfile.[ch]:
+moo/mooutils/newgtk/glib-2.12/glib/gbase64.[ch]:
+moo/mooutils/newgtk/glib-2.14/glib/gregex.[ch]:
+moo/mooutils/moocompat.[ch]:
+    Gtk and Glib code for older systems
+    Copyright 2000 Red Hat, Inc.
+    Copyright 2001,2005 Red Hat, Inc.
+    Copyright © 1995-1998  Peter Mattis, Spencer Kimball and Josh MacDonald
+    Copyright © 1999, 2000 Scott Wimer
+    Copyright © 2004, Matthias Clasen <mclasen@redhat.com>
+    Copyright © 2005 - 2007, Marco Barisione <marco@barisione.org>
+    Copyright © 2005  Alexander Larsson <alexl@redhat.com>
+    Copyright © 2006 Alexander Larsson <alexl@redhat.com>
+    Copyright © 2000-2003 Ximian Inc.
+    Copyright 2005 Matthias Clasen
+
+moo/mooutils/pixmaps/medit.png:
+    xedit.png icon from Crystal Clear icon theme by Everaldo Coelho,
+    http://www.everaldo.com
+
+The Debian packaging is © 2007, Arthur Loiret <arthur.loiret@gmail.com> and
+is licensed under the GPL, see above.
