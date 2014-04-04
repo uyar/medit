@@ -53,15 +53,18 @@
 #ifdef __WIN32__
 #include <windows.h>
 #include <shellapi.h>
+#include <shlobj.h>
 #endif
 
 MOO_DEFINE_OBJECT_ARRAY_FULL (MooObjectArray, moo_object_array, GObject)
 MOO_DEFINE_QUARK (moo-error, moo_error_quark)
 
 G_LOCK_DEFINE_STATIC (moo_user_data_dir);
+G_LOCK_DEFINE_STATIC (moo_user_cache_dir);
 static char *moo_app_instance_name;
 static char *moo_display_app_name;
 static char *moo_user_data_dir;
+static char *moo_user_cache_dir;
 
 #ifdef __WIN32__
 
@@ -538,7 +541,7 @@ _moo_window_set_icon_from_stock (GtkWindow  *window,
     if (icon)
     {
         gtk_window_set_icon (GTK_WINDOW (window), icon);
-        gdk_pixbuf_unref (icon);
+        g_object_unref (icon);
     }
 }
 
@@ -1132,9 +1135,77 @@ moo_getenv_bool (const char *var)
 char *
 moo_get_user_cache_dir (void)
 {
-    return g_build_filename (g_get_user_cache_dir (), MOO_PACKAGE_NAME, NULL);
+    G_LOCK (moo_user_cache_dir);
+
+    if (!moo_user_cache_dir)
+        moo_user_cache_dir = g_build_filename (g_get_user_cache_dir (), MOO_PACKAGE_NAME, NULL);
+
+    G_UNLOCK (moo_user_cache_dir);
+
+    return g_strdup (moo_user_cache_dir);
 }
 
+void
+moo_set_user_cache_dir (const char *path)
+{
+    G_LOCK (moo_user_cache_dir);
+
+    if (moo_user_cache_dir)
+        g_critical ("user cache dir already set");
+
+    g_free (moo_user_cache_dir);
+    moo_user_cache_dir = g_strdup (path);
+
+    G_UNLOCK (moo_user_cache_dir);
+}
+
+#ifdef __WIN32__
+// get_special_folder() from glib
+static gchar *
+get_special_folder (int csidl)
+{
+    wchar_t path[MAX_PATH+1];
+    HRESULT hr;
+    LPITEMIDLIST pidl = NULL;
+    BOOL b;
+    gchar *retval = NULL;
+
+    hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
+    if (hr == S_OK)
+    {
+        b = SHGetPathFromIDListW (pidl, path);
+        if (b)
+            retval = g_utf16_to_utf8 (path, -1, NULL, NULL, NULL);
+        CoTaskMemFree (pidl);
+    }
+
+    return retval;
+}
+
+// This is what g_get_user_config_dir() used to return in glib-2.26 and older.
+// Workaround for the change done in https://bugzilla.gnome.org/show_bug.cgi?id=620710
+static char *
+get_user_config_dir (void)
+{
+    char *retval = NULL;
+
+    retval = get_special_folder (CSIDL_APPDATA);
+
+    if (!retval)
+    {
+        g_critical ("oops");
+        retval = g_strdup (g_get_user_config_dir ());
+    }
+
+    return retval;
+}
+#endif // __WIN32__
+
+/**
+ * moo_get_user_data_dir: (moo.private 1)
+ *
+ * Returns: (type filename)
+ */
 char *
 moo_get_user_data_dir (void)
 {
@@ -1142,15 +1213,20 @@ moo_get_user_data_dir (void)
 
     if (!moo_user_data_dir)
     {
+        char *freeme = NULL;
+        const char *basedir = NULL;
+
 #ifdef __WIN32__
-        const char *basedir = g_get_user_config_dir ();
+        basedir = freeme = get_user_config_dir ();
 #else
-        const char *basedir = g_get_user_data_dir ();
+        basedir = g_get_user_data_dir ();
 #endif
 
         moo_user_data_dir = g_build_filename (basedir,
                                               MOO_PACKAGE_NAME,
                                               NULL);
+
+        g_free (freeme);
     }
 
     G_UNLOCK (moo_user_data_dir);
@@ -1398,12 +1474,22 @@ moo_get_data_dirs_real (MooDataDirType   type_requested,
     }
 }
 
+/**
+ * moo_get_data_dirs: (moo.private 1)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_data_dirs (void)
 {
     return moo_get_data_dirs_real (MOO_DATA_SHARE, TRUE, NULL);
 }
 
+/**
+ * moo_get_lib_dirs: (moo.private 1)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_lib_dirs (void)
 {
@@ -1445,24 +1531,52 @@ moo_get_stuff_subdirs (const char    *subdir,
     return dirs;
 }
 
+/**
+ * moo_get_data_subdirs: (moo.private 1)
+ *
+ * @subdir: (type const-utf8)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_data_subdirs (const char *subdir)
 {
     return moo_get_stuff_subdirs (subdir, MOO_DATA_SHARE, TRUE);
 }
 
+/**
+ * moo_get_sys_data_subdirs: (moo.private 1)
+ *
+ * @subdir: (type const-utf8)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_sys_data_subdirs (const char *subdir)
 {
     return moo_get_stuff_subdirs (subdir, MOO_DATA_SHARE, FALSE);
 }
 
+/**
+ * moo_get_lib_subdirs: (moo.private 1)
+ *
+ * @subdir: (type const-utf8)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_lib_subdirs (const char *subdir)
 {
     return moo_get_stuff_subdirs (subdir, MOO_DATA_LIB, TRUE);
 }
 
+/**
+ * moo_get_data_and_lib_subdirs: (moo.private 1)
+ *
+ * @subdir: (type const-utf8)
+ *
+ * Returns: (type strv)
+ */
 char **
 moo_get_data_and_lib_subdirs (const char *subdir)
 {
@@ -1491,6 +1605,13 @@ get_user_data_file (const char *basename,
     return file;
 }
 
+/**
+ * moo_get_named_user_data_file: (moo.private 1)
+ *
+ * @basename: (type const-utf8)
+ *
+ * Returns: (type filename)
+ */
 char *
 moo_get_named_user_data_file (const char *basename)
 {
@@ -1511,12 +1632,26 @@ moo_get_named_user_data_file (const char *basename)
     return file;
 }
 
+/**
+ * moo_get_user_data_file: (moo.private 1)
+ *
+ * @basename: (type const-utf8)
+ *
+ * Returns: (type filename)
+ */
 char *
 moo_get_user_data_file (const char *basename)
 {
     return get_user_data_file (basename, FALSE);
 }
 
+/**
+ * moo_get_user_cache_file: (moo.private 1)
+ *
+ * @basename: (type const-utf8)
+ *
+ * Returns: (type filename)
+ */
 char *
 moo_get_user_cache_file (const char *basename)
 {
@@ -1663,12 +1798,10 @@ void _moo_logv (MooCodeLoc loc, GLogLevelFlags flags, const char *format, va_lis
 
     message = g_strdup_vprintf (format, args);
 
-    if (moo_code_loc_valid (loc))
-        g_log (G_LOG_DOMAIN, flags,
-               Q_("console message|in file %s, line %d, function %s: %s"),
-               loc.file, loc.line, loc.func, message);
-    else
-        g_log (G_LOG_DOMAIN, flags, "%s", message);
+    g_log (G_LOG_DOMAIN, flags,
+           /* Translators: remove the part before and including | */
+           Q_("console message|in file %s, line %d, function %s: %s"),
+           loc.file, loc.line, loc.func, message);
 
     g_free (message);
 }

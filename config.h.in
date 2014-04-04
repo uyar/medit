@@ -85,6 +85,15 @@
    */
 #undef LT_OBJDIR
 
+/* cache files are saved in this directory */
+#undef MEDIT_PORTABLE_CACHE_DIR
+
+/* prefs files are saved in this directory */
+#undef MEDIT_PORTABLE_DATA_DIR
+
+/* file which enables portable mode */
+#undef MEDIT_PORTABLE_MAGIC_FILE_NAME
+
 /* broken gtk theme */
 #undef MOO_BROKEN_GTK_THEME
 

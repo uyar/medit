@@ -1,18 +1,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>moo.ReloadInfo - information for reloading a file</title>
+<title>moo.OpenInfo - information for opening a file</title>
 <link rel="stylesheet" type="text/css" href="../medit.css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="medit scripting manual">
 <link rel="up" href="python-moo.html" title="Chapter 3. medit Python API">
-<link rel="prev" href="ch03s08.html" title="moo.OpenInfo - information for opening a file">
-<link rel="next" href="ch03s10.html" title="moo.SaveInfo - information for saving a file">
+<link rel="prev" href="ch03s08.html" title="moo.Editor - editor object">
+<link rel="next" href="ch03s10.html" title="moo.ReloadInfo - information for reloading a file">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <div class="navheader">
 <table width="100%" summary="Navigation header">
-<tr><th colspan="3" align="center">moo.ReloadInfo - information for reloading a file</th></tr>
+<tr><th colspan="3" align="center">moo.OpenInfo - information for opening a file</th></tr>
 <tr>
 <td width="20%" align="left">
 <a accesskey="p" href="ch03s08.html">Prev</a> </td>
@@ -25,23 +25,28 @@
 </div>
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="python.MooReloadInfo"></a>moo.ReloadInfo - information for reloading a file</h2></div></div></div>
-<div class="toc"><dl>
-<dt><span class="sect2"><a href="ch03s09.html#python.moo_reload_info_new">ReloadInfo()</a></span></dt>
-<dt><span class="sect2"><a href="ch03s09.html#python.moo_reload_info_dup">dup()</a></span></dt>
-<dt><span class="sect2"><a href="ch03s09.html#python.moo_reload_info_get_line">get_line()</a></span></dt>
-<dt><span class="sect2"><a href="ch03s09.html#python.moo_reload_info_set_line">set_line()</a></span></dt>
+<a name="python.MooOpenInfo"></a>moo.OpenInfo - information for opening a file</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_new">OpenInfo()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_new_file">new_file()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_new_uri">new_uri()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_add_flags">add_flags()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_dup">dup()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_get_flags">get_flags()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_get_line">get_line()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_set_flags">set_flags()</a></span></dt>
+<dt><span class="sect2"><a href="ch03s09.html#python.moo_open_info_set_line">set_line()</a></span></dt>
 </dl></div>
-<p>Object which contains character encoding and line number to use in <code class="function"><a class="link" href="ch03s07.html#python.moo_editor_reload" title="reload()">moo.Editor.reload()</a></code>.</p>
+<p>Object which contains filename, character encoding, line number, and options to use in <code class="function"><a class="link" href="ch03s08.html#python.moo_editor_open_file" title="open_file()">moo.Editor.open_file()</a></code>.</p>
 <pre class="programlisting">
 <code class="constant"><a class="ulink" href="http://library.gnome.org/devel/pygobject/stable/class-gobject.html" target="_top">gobject.Object</a></code>
   |
-  +-- moo.ReloadInfo
+  +-- moo.OpenInfo
 </pre>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="python.moo_reload_info_new"></a>ReloadInfo()</h3></div></div></div>
-<pre class="programlisting">ReloadInfo(encoding=<code class="constant">None</code>, line=-1)</pre>
+<a name="python.moo_open_info_new"></a>OpenInfo()</h3></div></div></div>
+<pre class="programlisting">OpenInfo(path, encoding=<code class="constant">None</code>, line=-1, flags=0)</pre>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
 <col align="left" valign="top">
@@ -49,36 +54,145 @@
 </colgroup>
 <tbody>
 <tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em></span> : </p></td>
+<td><p><code class="constant">str</code></p></td>
+</tr>
+<tr>
 <td><p><span class="term"><em class="parameter"><code>encoding</code></em></span> : </p></td>
 <td><p><code class="constant">str</code> or <code class="constant">None</code></p></td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>line</code></em></span> : </p></td>
-<td><p><code class="constant">int</code></p></td>
+<td><p><code class="constant">integer index (0-based)</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p></td>
 </tr>
 </tbody>
 </table></div>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.ReloadInfo - information for reloading a file">moo.ReloadInfo</a></code></p>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.OpenInfo - information for opening a file">moo.OpenInfo</a></code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="python.moo_reload_info_dup"></a>dup()</h3></div></div></div>
-<pre class="programlisting">reload_info.dup()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.ReloadInfo - information for reloading a file">moo.ReloadInfo</a></code></p>
+<a name="python.moo_open_info_new_file"></a>new_file()</h3></div></div></div>
+<pre class="programlisting">OpenInfo.new_file(file, encoding=<code class="constant">None</code>, line=-1, flags=0)</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>file</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="ulink" href="http://library.gnome.org/devel/pygobject/stable/class-giofile.html" target="_top">gio.File</a></code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em></span> : </p></td>
+<td><p><code class="constant">str</code> or <code class="constant">None</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em></span> : </p></td>
+<td><p><code class="constant">integer index (0-based)</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p></td>
+</tr>
+</tbody>
+</table></div>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.OpenInfo - information for opening a file">moo.OpenInfo</a></code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="python.moo_reload_info_get_line"></a>get_line()</h3></div></div></div>
-<pre class="programlisting">reload_info.get_line()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant">int</code></p>
+<a name="python.moo_open_info_new_uri"></a>new_uri()</h3></div></div></div>
+<pre class="programlisting">OpenInfo.new_uri(uri, encoding=<code class="constant">None</code>, line=-1, flags=0)</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em></span> : </p></td>
+<td><p><code class="constant">str</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>encoding</code></em></span> : </p></td>
+<td><p><code class="constant">str</code> or <code class="constant">None</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em></span> : </p></td>
+<td><p><code class="constant">integer index (0-based)</code></p></td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p></td>
+</tr>
+</tbody>
+</table></div>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.OpenInfo - information for opening a file">moo.OpenInfo</a></code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="python.moo_reload_info_set_line"></a>set_line()</h3></div></div></div>
-<pre class="programlisting">reload_info.set_line(line)</pre>
+<a name="python.moo_open_info_add_flags"></a>add_flags()</h3></div></div></div>
+<pre class="programlisting">open_info.add_flags(flags)</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p></td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="sect2">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="python.moo_open_info_dup"></a>dup()</h3></div></div></div>
+<pre class="programlisting">open_info.dup()</pre>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s09.html" title="moo.OpenInfo - information for opening a file">moo.OpenInfo</a></code></p>
+</div>
+<hr>
+<div class="sect2">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="python.moo_open_info_get_flags"></a>get_flags()</h3></div></div></div>
+<pre class="programlisting">open_info.get_flags()</pre>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p>
+</div>
+<hr>
+<div class="sect2">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="python.moo_open_info_get_line"></a>get_line()</h3></div></div></div>
+<pre class="programlisting">open_info.get_line()</pre>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant">integer index (0-based)</code></p>
+</div>
+<hr>
+<div class="sect2">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="python.moo_open_info_set_flags"></a>set_flags()</h3></div></div></div>
+<pre class="programlisting">open_info.set_flags(flags)</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em></span> : </p></td>
+<td><p><code class="constant"><a class="link" href="ch03s15.html#python.MooOpenFlags" title="moo.OpenFlags">moo.OpenFlags</a></code></p></td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="sect2">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="python.moo_open_info_set_line"></a>set_line()</h3></div></div></div>
+<pre class="programlisting">open_info.set_line(line)</pre>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
 <col align="left" valign="top">
@@ -86,7 +200,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>line</code></em></span> : </p></td>
-<td><p><code class="constant">int</code></p></td>
+<td><p><code class="constant">integer index (0-based)</code></p></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -102,9 +216,9 @@
 </td>
 </tr>
 <tr>
-<td width="40%" align="left" valign="top">moo.OpenInfo - information for opening a file </td>
+<td width="40%" align="left" valign="top">moo.Editor - editor object </td>
 <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
-<td width="40%" align="right" valign="top"> moo.SaveInfo - information for saving a file</td>
+<td width="40%" align="right" valign="top"> moo.ReloadInfo - information for reloading a file</td>
 </tr>
 </table>
 </div>

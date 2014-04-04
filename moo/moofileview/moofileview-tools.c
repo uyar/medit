@@ -17,7 +17,6 @@
 #include "config.h"
 #endif
 
-#define MOO_FILE_VIEW_COMPILATION
 #include "moofileview/moofileview-tools.h"
 #include "moofileview/moofileview-private.h"
 #include "moofileview/moofile-private.h"
@@ -332,6 +331,7 @@ _moo_file_view_tools_load (MooFileView *fileview)
     }
 
     {
+        /* Translators: this is a context menu item label in the file selector, remove the part before and including | */
         GtkAction *action = tool_action_new (fileview, Q_("Open with|Default Application"), "*", NULL,
 #ifndef __WIN32__
                                              "xdg-open %f"

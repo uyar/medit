@@ -30,6 +30,7 @@
 #include "mooutils/mooi18n.h"
 #include "mooutils/moohelp.h"
 #include "mooutils/mooutils-fs.h"
+#include "mooutils/mooutils-misc.h"
 #include "plugins/moofind-gxml.h"
 #include "plugins/moogrep-gxml.h"
 #include "moo-help-sections.h"
@@ -323,7 +324,7 @@ setup_file_combo (MooHistoryCombo *hist_combo)
     entry = MOO_COMBO (hist_combo)->entry;
     completion = g_object_new (MOO_TYPE_FILE_ENTRY_COMPLETION,
                                "directories-only", TRUE,
-                               "case-sensitive", TRUE,
+                               "case-sensitive", !moo_os_win32 (),
                                "show-hidden", FALSE,
                                (const char*) NULL);
     _moo_file_entry_completion_set_entry (completion, GTK_ENTRY (entry));
@@ -701,12 +702,19 @@ process_grep_line (MooLineView *view,
         return TRUE;
 
     p = line;
-    if (!(colon = strchr (p, ':')) ||
+    if (!(colon = strchr (p, ':')))
+        goto parse_error;
+
 #ifdef __WIN32__
-        /* Absolute filename 'C:\foobar\blah.txt:100:lalala' */
-        !(colon = strchr (colon + 1, ':')) ||
+    /* Absolute filename 'C:\foobar\blah.txt:100:lalala' */
+    if (g_ascii_isalpha(p[0]) && p[1] == ':')
+    {
+        if (!(colon = strchr (colon + 1, ':')))
+            goto parse_error;
+    }
 #endif
-        !colon[1])
+
+    if (!colon[1])
         goto parse_error;
 
     filename = g_strndup (p, colon - p);

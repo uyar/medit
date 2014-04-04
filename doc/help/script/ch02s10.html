@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>gtk.TextIter</title>
 <link rel="stylesheet" type="text/css" href="../medit.css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="medit scripting manual">
 <link rel="up" href="lua-gtk.html" title="Chapter 2. Gtk API for Lua scripts">
 <link rel="prev" href="ch02s09.html" title="gtk.TextBuffer">
@@ -26,7 +26,7 @@
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="lua.GtkTextIter"></a>gtk.TextIter</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="sect2"><a href="ch02s10.html#lua.gtk_text_iter_get_buffer">get_buffer()</a></span></dt>
 <dt><span class="sect2"><a href="ch02s10.html#lua.gtk_text_iter_copy">copy()</a></span></dt>
 <dt><span class="sect2"><a href="ch02s10.html#lua.gtk_text_iter_get_offset">get_offset()</a></span></dt>
@@ -83,28 +83,28 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lua.gtk_text_iter_get_offset"></a>get_offset()</h3></div></div></div>
 <pre class="programlisting">text_iter.get_offset()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant">index</code></p>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant">integer index (1-based)</code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lua.gtk_text_iter_get_line"></a>get_line()</h3></div></div></div>
 <pre class="programlisting">text_iter.get_line()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant">index</code></p>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant">integer index (1-based)</code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lua.gtk_text_iter_get_line_offset"></a>get_line_offset()</h3></div></div></div>
 <pre class="programlisting">text_iter.get_line_offset()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant">index</code></p>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant">integer index (1-based)</code></p>
 </div>
 <hr>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lua.gtk_text_iter_get_line_index"></a>get_line_index()</h3></div></div></div>
 <pre class="programlisting">text_iter.get_line_index()</pre>
-<p><em class="parameter"><code>Returns:</code></em> <code class="constant">index</code></p>
+<p><em class="parameter"><code>Returns:</code></em> <code class="constant">integer index (1-based)</code></p>
 </div>
 <hr>
 <div class="sect2">
@@ -335,7 +335,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>char_offset</code></em></span> : </p></td>
-<td><p><code class="constant">index</code></p></td>
+<td><p><code class="constant">integer index (1-based)</code></p></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -351,7 +351,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>line_number</code></em></span> : </p></td>
-<td><p><code class="constant">index</code></p></td>
+<td><p><code class="constant">integer index (1-based)</code></p></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -367,7 +367,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>char_on_line</code></em></span> : </p></td>
-<td><p><code class="constant">index</code></p></td>
+<td><p><code class="constant">integer index (1-based)</code></p></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -383,7 +383,7 @@
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>byte_on_line</code></em></span> : </p></td>
-<td><p><code class="constant">index</code></p></td>
+<td><p><code class="constant">integer index (1-based)</code></p></td>
 </tr></tbody>
 </table></div>
 </div>

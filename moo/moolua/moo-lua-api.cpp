@@ -53,6 +53,48 @@ cfunc_MooApp_instance (G_GNUC_UNUSED lua_State *L)
 
 // methods of MooCmdView
 
+static int
+cfunc_MooCmdView_run_command (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_cmd_view_run_command");
+#endif
+    MooLuaCurrentFunc cur_func ("MooCmdView.run_command");
+    MooCmdView *self = (MooCmdView*) pself;
+    const char* arg0 = moo_lua_get_arg_filename (L, first_arg + 0, "cmd", FALSE);
+    const char* arg1 = moo_lua_get_arg_filename_opt (L, first_arg + 1, "working_dir", NULL, TRUE);
+    const char* arg2 = moo_lua_get_arg_utf8_opt (L, first_arg + 2, "job_name", NULL, TRUE);
+    gboolean ret = moo_cmd_view_run_command (self, arg0, arg1, arg2);
+    return moo_lua_push_bool (L, ret);
+}
+
+static int
+cfunc_MooCmdView_set_filter_by_id (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_cmd_view_set_filter_by_id");
+#endif
+    MooLuaCurrentFunc cur_func ("MooCmdView.set_filter_by_id");
+    MooCmdView *self = (MooCmdView*) pself;
+    const char* arg0 = moo_lua_get_arg_utf8 (L, first_arg + 0, "id", FALSE);
+    moo_cmd_view_set_filter_by_id (self, arg0);
+    return 0;
+}
+
+static int
+cfunc_MooCmdView_write_with_filter (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_cmd_view_write_with_filter");
+#endif
+    MooLuaCurrentFunc cur_func ("MooCmdView.write_with_filter");
+    MooCmdView *self = (MooCmdView*) pself;
+    const char* arg0 = moo_lua_get_arg_utf8 (L, first_arg + 0, "text", FALSE);
+    gboolean arg1 = moo_lua_get_arg_bool_opt (L, first_arg + 1, "error", FALSE);
+    moo_cmd_view_write_with_filter (self, arg0, arg1);
+    return 0;
+}
+
 // methods of MooCombo
 
 // methods of MooEdit
@@ -1232,6 +1274,18 @@ cfunc_MooEditWindow_get_n_tabs (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GN
 }
 
 static int
+cfunc_MooEditWindow_get_output (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_edit_window_get_output");
+#endif
+    MooLuaCurrentFunc cur_func ("MooEditWindow.get_output");
+    MooEditWindow *self = (MooEditWindow*) pself;
+    gpointer ret = moo_edit_window_get_output (self);
+    return moo_lua_push_object (L, (GObject*) ret, TRUE);
+}
+
+static int
 cfunc_MooEditWindow_get_tabs (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
 {
 #ifdef MOO_ENABLE_COVERAGE
@@ -1253,6 +1307,18 @@ cfunc_MooEditWindow_get_views (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNU
     MooEditWindow *self = (MooEditWindow*) pself;
     MooObjectArray *ret = (MooObjectArray*) moo_edit_window_get_views (self);
     return moo_lua_push_object_array (L, ret, FALSE);
+}
+
+static int
+cfunc_MooEditWindow_present_output (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED int first_arg)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_edit_window_present_output");
+#endif
+    MooLuaCurrentFunc cur_func ("MooEditWindow.present_output");
+    MooEditWindow *self = (MooEditWindow*) pself;
+    moo_edit_window_present_output (self);
+    return 0;
 }
 
 static int
@@ -2143,9 +2209,9 @@ cfunc_MooUiXml_add_item (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUS
     MooUiXml *self = (MooUiXml*) pself;
     guint arg0 = moo_lua_get_arg_uint (L, first_arg + 0, "merge_id");
     const char* arg1 = moo_lua_get_arg_utf8 (L, first_arg + 1, "parent_path", FALSE);
-    const char* arg2 = moo_lua_get_arg_utf8 (L, first_arg + 2, "name", FALSE);
+    const char* arg2 = moo_lua_get_arg_utf8_opt (L, first_arg + 2, "name", NULL, TRUE);
     const char* arg3 = moo_lua_get_arg_utf8 (L, first_arg + 3, "action", FALSE);
-    int arg4 = moo_lua_get_arg_int (L, first_arg + 4, "position");
+    int arg4 = moo_lua_get_arg_index_opt (L, first_arg + 4, "position", -1);
     gpointer ret = moo_ui_xml_add_item (self, arg0, arg1, arg2, arg3, arg4);
     return moo_lua_push_pointer (L, ret, MOO_TYPE_UI_NODE, TRUE);
 }
@@ -2230,7 +2296,7 @@ cfunc_MooUiXml_insert (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC_UNUSED
     MooUiXml *self = (MooUiXml*) pself;
     guint arg0 = moo_lua_get_arg_uint (L, first_arg + 0, "merge_id");
     MooUiNode *arg1 = (MooUiNode*) moo_lua_get_arg_instance (L, first_arg + 1, "parent", MOO_TYPE_UI_NODE, FALSE);
-    int arg2 = moo_lua_get_arg_int (L, first_arg + 2, "position");
+    int arg2 = moo_lua_get_arg_index_opt (L, first_arg + 2, "position", -1);
     const char* arg3 = moo_lua_get_arg_utf8 (L, first_arg + 3, "markup", FALSE);
     moo_ui_xml_insert (self, arg0, arg1, arg2, arg3);
     return 0;
@@ -2278,7 +2344,7 @@ cfunc_MooUiXml_insert_markup (gpointer pself, G_GNUC_UNUSED lua_State *L, G_GNUC
     MooUiXml *self = (MooUiXml*) pself;
     guint arg0 = moo_lua_get_arg_uint (L, first_arg + 0, "merge_id");
     const char* arg1 = moo_lua_get_arg_utf8 (L, first_arg + 1, "parent_path", FALSE);
-    int arg2 = moo_lua_get_arg_int (L, first_arg + 2, "position");
+    int arg2 = moo_lua_get_arg_index_opt (L, first_arg + 2, "position", -1);
     const char* arg3 = moo_lua_get_arg_utf8 (L, first_arg + 3, "markup", FALSE);
     moo_ui_xml_insert_markup (self, arg0, arg1, arg2, arg3);
     return 0;
@@ -2395,6 +2461,123 @@ cfunc_error_dialog (G_GNUC_UNUSED lua_State *L)
     GtkWidget *arg2 = (GtkWidget*) moo_lua_get_arg_instance_opt (L, 1 + 2, "parent", GTK_TYPE_WIDGET, TRUE);
     moo_error_dialog (arg0, arg1, arg2);
     return 0;
+}
+
+static int
+cfunc_get_data_and_lib_subdirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_data_and_lib_subdirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_data_and_lib_subdirs");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "subdir", FALSE);
+    char **ret = moo_get_data_and_lib_subdirs (arg0);
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_data_dirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_data_dirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_data_dirs");
+    char **ret = moo_get_data_dirs ();
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_data_subdirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_data_subdirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_data_subdirs");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "subdir", FALSE);
+    char **ret = moo_get_data_subdirs (arg0);
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_lib_dirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_lib_dirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_lib_dirs");
+    char **ret = moo_get_lib_dirs ();
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_lib_subdirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_lib_subdirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_lib_subdirs");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "subdir", FALSE);
+    char **ret = moo_get_lib_subdirs (arg0);
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_named_user_data_file (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_named_user_data_file");
+#endif
+    MooLuaCurrentFunc cur_func ("get_named_user_data_file");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "basename", FALSE);
+    char *ret = moo_get_named_user_data_file (arg0);
+    return moo_lua_push_filename (L, ret);
+}
+
+static int
+cfunc_get_sys_data_subdirs (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_sys_data_subdirs");
+#endif
+    MooLuaCurrentFunc cur_func ("get_sys_data_subdirs");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "subdir", FALSE);
+    char **ret = moo_get_sys_data_subdirs (arg0);
+    return moo_lua_push_strv (L, ret);
+}
+
+static int
+cfunc_get_user_cache_file (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_user_cache_file");
+#endif
+    MooLuaCurrentFunc cur_func ("get_user_cache_file");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "basename", FALSE);
+    char *ret = moo_get_user_cache_file (arg0);
+    return moo_lua_push_filename (L, ret);
+}
+
+static int
+cfunc_get_user_data_dir (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_user_data_dir");
+#endif
+    MooLuaCurrentFunc cur_func ("get_user_data_dir");
+    char *ret = moo_get_user_data_dir ();
+    return moo_lua_push_filename (L, ret);
+}
+
+static int
+cfunc_get_user_data_file (G_GNUC_UNUSED lua_State *L)
+{
+#ifdef MOO_ENABLE_COVERAGE
+    moo_test_coverage_record ("lua", "moo_get_user_data_file");
+#endif
+    MooLuaCurrentFunc cur_func ("get_user_data_file");
+    const char* arg0 = moo_lua_get_arg_utf8 (L, 1 + 0, "basename", FALSE);
+    char *ret = moo_get_user_data_file (arg0);
+    return moo_lua_push_filename (L, ret);
 }
 
 static int
@@ -2695,6 +2878,16 @@ cfunc_warning_dialog (G_GNUC_UNUSED lua_State *L)
 
 static const luaL_Reg moo_lua_functions[] = {
     { "error_dialog", cfunc_error_dialog },
+    { "get_data_and_lib_subdirs", cfunc_get_data_and_lib_subdirs },
+    { "get_data_dirs", cfunc_get_data_dirs },
+    { "get_data_subdirs", cfunc_get_data_subdirs },
+    { "get_lib_dirs", cfunc_get_lib_dirs },
+    { "get_lib_subdirs", cfunc_get_lib_subdirs },
+    { "get_named_user_data_file", cfunc_get_named_user_data_file },
+    { "get_sys_data_subdirs", cfunc_get_sys_data_subdirs },
+    { "get_user_cache_file", cfunc_get_user_cache_file },
+    { "get_user_data_dir", cfunc_get_user_data_dir },
+    { "get_user_data_file", cfunc_get_user_data_file },
     { "info_dialog", cfunc_info_dialog },
     { "overwrite_file_dialog", cfunc_overwrite_file_dialog },
     { "prefs_get_bool", cfunc_prefs_get_bool },
@@ -2766,6 +2959,14 @@ moo_lua_api_register (void)
         { NULL, NULL }
     };
     moo_lua_register_methods (MOO_TYPE_APP, methods_MooApp);
+
+    MooLuaMethodEntry methods_MooCmdView[] = {
+        { "run_command", cfunc_MooCmdView_run_command },
+        { "set_filter_by_id", cfunc_MooCmdView_set_filter_by_id },
+        { "write_with_filter", cfunc_MooCmdView_write_with_filter },
+        { NULL, NULL }
+    };
+    moo_lua_register_methods (MOO_TYPE_CMD_VIEW, methods_MooCmdView);
 
     MooLuaMethodEntry methods_MooEdit[] = {
         { "append_text", cfunc_MooEdit_append_text },
@@ -2874,8 +3075,10 @@ moo_lua_api_register (void)
         { "get_docs", cfunc_MooEditWindow_get_docs },
         { "get_editor", cfunc_MooEditWindow_get_editor },
         { "get_n_tabs", cfunc_MooEditWindow_get_n_tabs },
+        { "get_output", cfunc_MooEditWindow_get_output },
         { "get_tabs", cfunc_MooEditWindow_get_tabs },
         { "get_views", cfunc_MooEditWindow_get_views },
+        { "present_output", cfunc_MooEditWindow_present_output },
         { "set_active_doc", cfunc_MooEditWindow_set_active_doc },
         { "set_active_tab", cfunc_MooEditWindow_set_active_tab },
         { "set_active_view", cfunc_MooEditWindow_set_active_view },

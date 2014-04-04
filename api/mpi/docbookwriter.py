@@ -7,6 +7,7 @@ lua_constants = {
     'NULL': '<constant>nil</constant>',
     'TRUE': '<constant>true</constant>',
     'FALSE': '<constant>false</constant>',
+    'INDEXBASE': '<constant>1</constant>',
 }
 
 python_constants = {
@@ -15,6 +16,7 @@ python_constants = {
     'FALSE': '<constant>False</constant>',
     'GTK_RESPONSE_OK': '<constant><ulink url="http://library.gnome.org/devel/pygtk/stable/' +
                        'gtk-constants.html#gtk-response-type-constants">gtk.RESPONSE_OK</ulink></constant>',
+    'INDEXBASE': '<constant>0</constant>',
 }
 
 common_types = {
@@ -24,7 +26,7 @@ common_types = {
 
 lua_types = dict(common_types)
 lua_types.update({
-    'index': '<constant>index</constant>',
+    'index': '<constant>integer index (1-based)</constant>',
     'value': '<constant>value</constant>',
     'gunichar': '<constant>string</constant>',
     'double': '<constant>number</constant>',
@@ -42,7 +44,7 @@ lua_types.update({
 
 python_types = dict(common_types)
 python_types.update({
-    'index': '<constant>int</constant>',
+    'index': '<constant>integer index (0-based)</constant>',
     'gunichar': '<constant>str</constant>',
     'double': '<constant>float</constant>',
     'int': '<constant>int</constant>',
@@ -120,6 +122,9 @@ class Writer(object):
             elif isinstance(sym, Type):
                 return '<constant><link linkend="%(mode)s.%(symbol)s">%(name)s</link></constant>' % \
                     dict(symbol=name, mode=self.mode, name=self.__make_class_name(sym))
+            elif isinstance(sym, Method):
+                return '<constant><link linkend="%(mode)s.%(symbol)s">%(Class)s.%(method)s()</link></constant>' % \
+                    dict(symbol=name, mode=self.mode, Class=self.__make_class_name(sym.cls), method=sym.name)
             else:
                 oops(name)
         if self.mode == 'python':
@@ -167,6 +172,7 @@ class Writer(object):
         text = re.sub(r'%NULL\b', '<constant>%s</constant>' % self.constants['NULL'], text)
         text = re.sub(r'%TRUE\b', '<constant>%s</constant>' % self.constants['TRUE'], text)
         text = re.sub(r'%FALSE\b', '<constant>%s</constant>' % self.constants['FALSE'], text)
+        text = re.sub(r'%INDEXBASE\b', '<constant>%s</constant>' % self.constants['INDEXBASE'], text)
         text = text.replace(r'<n/>', '')
         text = text.replace(r'<nl/>', '\n')
 
