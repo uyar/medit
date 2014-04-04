@@ -13,7 +13,6 @@
  *   License along with medit.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define MOO_FILE_VIEW_COMPILATION
 #include "moofileview/moofileview-accels.h"
 #include "moofileview/moofileview-dialogs.h"
 #include "moofileview/moobookmarkmgr.h"
@@ -24,7 +23,7 @@
 #include "moofileview/mooiconview.h"
 #include "moofileview/moofileview-aux.h"
 #include "moofileview/moofileview-private.h"
-#include "moofileview-ui.h"
+#include "moofileview/moofileview-ui.h"
 #include "moofileview/mootreeview.h"
 #include "moofileview/moobookmarkview.h"
 #include "moofileview/moofileview-tools.h"
@@ -4810,7 +4809,7 @@ typeahead_tab_key (MooFileView *fileview)
             name = _moo_file_display_name (file);
 
 #if 0
-            if (!file || stuff->strcmp_func (stuff->matched_prefix->str, file))
+            if (!file || !stuff->file_equals (file, stuff->matched_prefix->str))
                 goto error;
 #endif
 
@@ -4847,7 +4846,7 @@ typeahead_tab_key (MooFileView *fileview)
         goto error;
 
 #if 0
-//     if (stuff->strncmp_func (stuff->matched_prefix->str, file, stuff->matched_prefix->len))
+//     if (!stuff->file_has_prefix (file, stuff->matched_prefix->str, stuff->matched_prefix->len))
 //         goto error;
 #endif
 
@@ -4896,19 +4895,7 @@ typeahead_create (MooFileView *fileview)
     stuff->fileview = fileview;
     stuff->entry = fileview->priv->entry;
     stuff->case_sensitive = fileview->priv->typeahead_case_sensitive;
-
-    if (stuff->case_sensitive)
-    {
-        stuff->text_funcs.strcmp_func = strcmp_func;
-        stuff->text_funcs.strncmp_func = strncmp_func;
-        stuff->text_funcs.normalize_func = normalize_func;
-    }
-    else
-    {
-        stuff->text_funcs.strcmp_func = case_strcmp_func;
-        stuff->text_funcs.strncmp_func = case_strncmp_func;
-        stuff->text_funcs.normalize_func = case_normalize_func;
-    }
+    set_text_funcs (&stuff->text_funcs, stuff->case_sensitive);
 
     fileview->priv->typeahead = stuff;
 }
@@ -4937,19 +4924,7 @@ _moo_file_view_set_typeahead_case_sensitive (MooFileView *fileview,
 
         fileview->priv->typeahead_case_sensitive = case_sensitive;
         stuff->case_sensitive = case_sensitive;
-
-        if (case_sensitive)
-        {
-            stuff->text_funcs.strcmp_func = strcmp_func;
-            stuff->text_funcs.strncmp_func = strncmp_func;
-            stuff->text_funcs.normalize_func = normalize_func;
-        }
-        else
-        {
-            stuff->text_funcs.strcmp_func = case_strcmp_func;
-            stuff->text_funcs.strncmp_func = case_strncmp_func;
-            stuff->text_funcs.normalize_func = case_normalize_func;
-        }
+        set_text_funcs (&stuff->text_funcs, case_sensitive);
 
         g_object_notify (G_OBJECT (fileview), "typeahead-case-sensitive");
     }

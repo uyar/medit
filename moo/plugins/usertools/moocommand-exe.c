@@ -84,15 +84,20 @@ static const char *output_strings[] = {
     "new-doc"
 };
 
-/* Translators: these are actions for output of a shell command, do not translate the part before | */
 static const char *output_names[] = {
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|None"),
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|None, asynchronous"),
 #ifdef __WIN32__
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|Console"),
 #endif
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|Output pane"),
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|Insert into the document"),
+    /* Translators: this is an action for output of a shell command, remove the part before and including | */
     N_("Output|New document")
 };
 
@@ -241,6 +246,7 @@ make_cmd (const char *base_cmd_line,
           const char *input)
 {
     char *cmd_line = NULL;
+    char *tmp_file = NULL;
     gsize input_len;
 
     input_len = input ? strlen (input) : 0;
@@ -248,26 +254,13 @@ make_cmd (const char *base_cmd_line,
     if (!input_len)
         return g_strdup (base_cmd_line);
 
-    if (input_len < 2048)
+    tmp_file = save_temp (input, input_len);
+
+    if (tmp_file)
     {
-        char *quoted;
-
-        quoted = g_shell_quote (input);
-        g_return_val_if_fail (quoted != NULL, NULL);
-
-        cmd_line = g_strdup_printf ("echo -n %s | ( %s )", quoted, base_cmd_line);
-        g_free (quoted);
-    }
-    else
-    {
-        char *tmp_file = save_temp (input, input_len);
-
-        if (tmp_file)
-        {
-            cmd_line = g_strdup_printf ("( %s ) < '%s' ; rm '%s'",
-                                        base_cmd_line, tmp_file, tmp_file);
-            g_free (tmp_file);
-        }
+        cmd_line = g_strdup_printf ("( %s ) < '%s' ; rm '%s'",
+                                    base_cmd_line, tmp_file, tmp_file);
+        g_free (tmp_file);
     }
 
     return cmd_line;
@@ -1065,12 +1058,16 @@ unx_factory_create_widget (G_GNUC_UNUSED MooCommandFactory *factory)
 {
     ExePageXml *xml;
 
-    /* Translators: these are kinds of input for a shell command, do not translate the part before | */
     const char *input_names[] = {
+        /* Translators: this is a kind of input for a shell command, remove the part before and including | */
         N_("Input|None"),
+        /* Translators: this is a kind of input for a shell command, remove the part before and including | */
         N_("Input|Selected lines"),
+        /* Translators: this is a kind of input for a shell command, remove the part before and including | */
         N_("Input|Selection"),
+        /* Translators: this is a kind of input for a shell command, remove the part before and including | */
         N_("Input|Whole document"),
+        /* Translators: this is a kind of input for a shell command, remove the part before and including | */
         N_("Input|Document copy")
     };
 

@@ -17,7 +17,6 @@
  * class:MooEditor: (parent GObject): editor object
  **/
 
-#define MOOEDIT_COMPILATION
 #include "mooedit/mooeditor-private.h"
 #include "mooedit/mooeditwindow-impl.h"
 #include "mooedit/mooeditdialogs.h"
@@ -329,6 +328,7 @@ moo_editor_class_init (MooEditorClass *klass)
                                         NULL, NULL);
     moo_window_class_new_action (edit_window_class, RECENT_DIALOG_ACTION_ID, NULL,
                                  "display-name", _("Open Recent Files Dialog"),
+                                 /* Translators: remove the part before and including | */
                                  "label", Q_("Open Recent|_More..."),
                                  "default-accel", MOO_EDIT_ACCEL_OPEN_RECENT_DIALOG,
                                  "closure-callback", action_recent_dialog,
@@ -2508,7 +2508,6 @@ moo_editor_reload (MooEditor     *editor,
 {
     guint i;
     GError *error_here = NULL;
-    MooEditView *active_view;
     MooEditViewArray *views = NULL;
     gboolean ret = FALSE;
 
@@ -2545,7 +2544,6 @@ moo_editor_reload (MooEditor     *editor,
     }
 
     views = moo_edit_get_views (doc);
-    active_view = moo_edit_get_view (doc);
 
     for (i = 0; i < moo_edit_view_array_get_size (views); ++i)
     {
@@ -2574,7 +2572,6 @@ moo_editor_reload (MooEditor     *editor,
 
         g_propagate_error (error, error_here);
 
-        moo_text_view_undo (MOO_TEXT_VIEW (active_view));
         g_object_set_data (G_OBJECT (doc), "moo-scroll-to", NULL);
         goto out;
     }

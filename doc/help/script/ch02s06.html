@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>gtk.GObject</title>
 <link rel="stylesheet" type="text/css" href="../medit.css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="medit scripting manual">
 <link rel="up" href="lua-gtk.html" title="Chapter 2. Gtk API for Lua scripts">
 <link rel="prev" href="ch02s05.html" title="gtk.GFile">
@@ -26,7 +26,7 @@
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="lua.GObject"></a>gtk.GObject</h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="sect2"><a href="ch02s06.html#lua.g_object_connect">connect()</a></span></dt>
 <dt><span class="sect2"><a href="ch02s06.html#lua.g_object_connect_after">connect_after()</a></span></dt>
 <dt><span class="sect2"><a href="ch02s06.html#lua.g_object_disconnect">disconnect()</a></span></dt>
@@ -41,7 +41,7 @@
 <pre class="programlisting">object.connect(signal, callback)</pre>
 <p>Connect a signal handler.  </p>
 <div class="example">
-<a name="idp164936"></a><p class="title"><b>Example 2.1. GObject.connect()</b></p>
+<a name="idp49985616"></a><p class="title"><b>Example 2.1. GObject.connect()</b></p>
 <div class="example-contents"><pre class="programlisting"> editor.connect("before-save", function(editor, doc, file)
    if #doc.get_text() % 2 ~= 0 then
      moo.error_dialog("Won't save",

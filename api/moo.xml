@@ -26,15 +26,19 @@
     </method>
   </class>
   <class constructable="1" gtype_id="MOO_TYPE_BIG_PANED" moo.private="1" name="MooBigPaned" parent="GtkFrame" short_name="BigPaned" />
-  <class constructable="1" gtype_id="MOO_TYPE_CMD_VIEW" moo.private="1" name="MooCmdView" parent="MooLineView" short_name="CmdView">
-    <method c_name="moo_cmd_view_run_command" moo.lua="0" name="run_command">
-      <param name="cmd" type="filename" />
-      <param allow_none="1" default_value="NULL" name="working_dir" type="filename" />
+  <class constructable="1" gtype_id="MOO_TYPE_CMD_VIEW" name="MooCmdView" parent="MooLineView" short_name="CmdView">
+    <method c_name="moo_cmd_view_run_command" name="run_command">
+      <param name="cmd" type="const-filename" />
+      <param allow_none="1" default_value="NULL" name="working_dir" type="const-filename" />
       <param allow_none="1" default_value="NULL" name="job_name" type="const-utf8" />
       <retval type="gboolean" />
     </method>
-    <method c_name="moo_cmd_view_set_filter_by_id" moo.lua="0" name="set_filter_by_id">
+    <method c_name="moo_cmd_view_set_filter_by_id" name="set_filter_by_id">
       <param name="id" type="const-utf8" />
+    </method>
+    <method c_name="moo_cmd_view_write_with_filter" name="write_with_filter">
+      <param name="text" type="const-utf8" />
+      <param allow_none="1" default_value="FALSE" name="error" type="gboolean" />
     </method>
   </class>
   <class constructable="1" gtype_id="MOO_TYPE_COMBO" moo.private="1" name="MooCombo" parent="GtkTable" short_name="Combo" />
@@ -128,7 +132,9 @@
       <retval type="gboolean" />
     </method>
     <method c_name="moo_edit_get_cursor_pos" name="get_cursor_pos">
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the current cursor (insertion point) position. In the case when text selection is not empty, it points to one of the ends of the selection.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_display_basename" name="get_display_basename">
       <retval type="const-utf8" />
@@ -143,7 +149,9 @@
       <retval type="const-utf8" />
     </method>
     <method c_name="moo_edit_get_end_pos" name="get_end_pos">
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the end of the document, i.e. the position past the last character in the document.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_file" name="get_file">
       <retval transfer_mode="full" type="GFile*" />
@@ -157,11 +165,15 @@
       </retval>
     </method>
     <method c_name="moo_edit_get_line_at_cursor" name="get_line_at_cursor">
-      <retval type="index" />
+      <retval type="index">
+        <doc>%INDEXBASE-based number of the current cursor line.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_line_at_pos" name="get_line_at_pos">
       <param name="pos" type="const-GtkTextIter*" />
-      <retval type="index" />
+      <retval type="index">
+        <doc>%INDEXBASE-based number of the line at the given position.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_line_count" name="get_line_count">
       <retval type="int" />
@@ -170,7 +182,9 @@
       <retval type="MooLineEndType" />
     </method>
     <method c_name="moo_edit_get_line_text" name="get_line_text">
-      <param default_value="-1" name="line" type="index" />
+      <param default_value="-1" name="line" type="index">
+        <doc>%INDEXBASE-based line number.</doc>
+      </param>
       <retval transfer_mode="full" type="utf8">
         <doc>text at line @line, not including line end characters. If @line is missing, returns text at cursor line.</doc>
       </retval>
@@ -178,19 +192,28 @@
     <method c_name="moo_edit_get_line_text_at_pos" name="get_line_text_at_pos">
       <param name="pos" type="const-GtkTextIter*" />
       <retval transfer_mode="full" type="utf8">
-        <doc>text at line which contains position @pos, not including line end characters.</doc>
+        <doc>text at line which contains position @pos, not including the line end character(s).</doc>
       </retval>
     </method>
     <method c_name="moo_edit_get_n_views" name="get_n_views">
       <retval type="int" />
+      <doc>Get the number of views which belong to this document.</doc>
     </method>
     <method c_name="moo_edit_get_pos_at_line" name="get_pos_at_line">
-      <param name="line" type="index" />
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <param name="line" type="index">
+        <doc>%INDEXBASE-based line number.</doc>
+      </param>
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the beginning of the given line.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_pos_at_line_end" name="get_pos_at_line_end">
-      <param name="line" type="index" />
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <param name="line" type="index">
+        <doc>%INDEXBASE-based line number.</doc>
+      </param>
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the end of the given line (i.e. the position before the line end character(s)).</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_selected_lines" name="get_selected_lines">
       <retval transfer_mode="full" type="strv" />
@@ -202,13 +225,19 @@
       </retval>
     </method>
     <method c_name="moo_edit_get_selection_end_pos" name="get_selection_end_pos">
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the end of the current text selection. If the selection is empty, it returns the current cursor position.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_selection_start_pos" name="get_selection_start_pos">
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the beginning of the current text selection. If the selection is empty, it returns the current cursor position.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_start_pos" name="get_start_pos">
-      <retval transfer_mode="full" type="GtkTextIter*" />
+      <retval transfer_mode="full" type="GtkTextIter*">
+        <doc>Iterator which points to the beginning of the document.</doc>
+      </retval>
     </method>
     <method c_name="moo_edit_get_status" name="get_status">
       <retval type="MooEditStatus" />
@@ -228,9 +257,11 @@
     </method>
     <method c_name="moo_edit_get_view" name="get_view">
       <retval type="MooEditView*" />
+      <doc>Get the active view of this document.</doc>
     </method>
     <method c_name="moo_edit_get_views" name="get_views">
       <retval type="MooEditViewArray*" />
+      <doc>Get the list of views which belong to this document.</doc>
     </method>
     <method c_name="moo_edit_get_window" name="get_window">
       <retval type="MooEditWindow*" />
@@ -317,6 +348,7 @@
     </method>
     <method c_name="moo_edit_set_cursor_pos" name="set_cursor_pos">
       <param name="pos" type="const-GtkTextIter*" />
+      <doc>Move the text cursor to the given position. No text is selected after this operation, use one of the select* methods if you need to select a range of text.</doc>
     </method>
     <method c_name="moo_edit_set_encoding" name="set_encoding">
       <param name="encoding" type="const-utf8" />
@@ -416,6 +448,12 @@
     <method c_name="moo_edit_window_get_n_tabs" name="get_n_tabs">
       <retval type="int" />
     </method>
+    <method c_name="moo_edit_window_get_output" name="get_output">
+      <retval type="GtkWidget*">
+        <doc> an output pane, as #MooCmdView object.</doc>
+      </retval>
+      <doc>Get the output pane, create it if necessary. This function does not open the pane, use #moo_edit_window_present_output for that.</doc>
+    </method>
     <method c_name="moo_edit_window_get_pane" moo.lua="0" name="get_pane">
       <param name="user_id" type="const-utf8" />
       <retval type="GtkWidget*" />
@@ -425,6 +463,9 @@
     </method>
     <method c_name="moo_edit_window_get_views" name="get_views">
       <retval transfer_mode="full" type="MooEditViewArray*" />
+    </method>
+    <method c_name="moo_edit_window_present_output" name="present_output">
+      <doc>Open the output pane.</doc>
     </method>
     <method c_name="moo_edit_window_remove_pane" moo.lua="0" name="remove_pane">
       <param name="user_id" type="const-utf8" />
@@ -852,9 +893,9 @@
     <method c_name="moo_ui_xml_add_item" name="add_item">
       <param name="merge_id" type="guint" />
       <param name="parent_path" type="const-utf8" />
-      <param name="name" type="const-utf8" />
+      <param allow_none="1" default_value="NULL" name="name" type="const-utf8" />
       <param name="action" type="const-utf8" />
-      <param name="position" type="int" />
+      <param default_value="-1" name="position" type="index" />
       <retval type="MooUiNode*" />
     </method>
     <method c_name="moo_ui_xml_add_ui_from_string" name="add_ui_from_string">
@@ -884,7 +925,7 @@
     <method c_name="moo_ui_xml_insert" name="insert">
       <param name="merge_id" type="guint" />
       <param name="parent" type="MooUiNode*" />
-      <param name="position" type="int" />
+      <param default_value="-1" name="position" type="index" />
       <param name="markup" type="const-utf8" />
     </method>
     <method c_name="moo_ui_xml_insert_after" name="insert_after">
@@ -902,7 +943,7 @@
     <method c_name="moo_ui_xml_insert_markup" name="insert_markup">
       <param name="merge_id" type="guint" />
       <param name="parent_path" type="const-utf8" />
-      <param name="position" type="int" />
+      <param default_value="-1" name="position" type="index" />
       <param name="markup" type="const-utf8" />
     </method>
     <method c_name="moo_ui_xml_insert_markup_after" name="insert_markup_after">
@@ -1087,6 +1128,43 @@
     <param name="text" type="const-utf8" />
     <param allow_none="1" default_value="NULL" name="secondary_text" type="const-utf8" />
     <param allow_none="1" default_value="NULL" name="parent" type="GtkWidget*" />
+  </function>
+  <function c_name="moo_get_data_and_lib_subdirs" moo.private="1" name="get_data_and_lib_subdirs">
+    <param name="subdir" type="const-utf8" />
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_data_dirs" moo.private="1" name="get_data_dirs">
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_data_subdirs" moo.private="1" name="get_data_subdirs">
+    <param name="subdir" type="const-utf8" />
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_lib_dirs" moo.private="1" name="get_lib_dirs">
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_lib_subdirs" moo.private="1" name="get_lib_subdirs">
+    <param name="subdir" type="const-utf8" />
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_named_user_data_file" moo.private="1" name="get_named_user_data_file">
+    <param name="basename" type="const-utf8" />
+    <retval transfer_mode="full" type="filename" />
+  </function>
+  <function c_name="moo_get_sys_data_subdirs" moo.private="1" name="get_sys_data_subdirs">
+    <param name="subdir" type="const-utf8" />
+    <retval transfer_mode="full" type="strv" />
+  </function>
+  <function c_name="moo_get_user_cache_file" moo.private="1" name="get_user_cache_file">
+    <param name="basename" type="const-utf8" />
+    <retval transfer_mode="full" type="filename" />
+  </function>
+  <function c_name="moo_get_user_data_dir" moo.private="1" name="get_user_data_dir">
+    <retval transfer_mode="full" type="filename" />
+  </function>
+  <function c_name="moo_get_user_data_file" moo.private="1" name="get_user_data_file">
+    <param name="basename" type="const-utf8" />
+    <retval transfer_mode="full" type="filename" />
   </function>
   <function c_name="moo_gettext" moo.lua="0" name="gettext">
     <param name="string" type="const-utf8" />
