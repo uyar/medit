@@ -1,3 +1,11 @@
+medit (1.2.0-2) unstable; urgency=low
+
+  * Migrate deprecated python-support to dh_python2 (Closes: #786239)
+  * Update Standards-Version 3.9.6. No changes required.
+  * Change Vcs-* fields to a new repository.
+
+ -- Jose G. López <josgalo@gmail.com>  Sat, 23 May 2015 13:07:16 +0200
+
 medit (1.2.0-1) unstable; urgency=low
 
   * New upstream version.
