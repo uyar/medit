@@ -2,11 +2,11 @@ Source: medit
 Section: editors
 Priority: optional
 Maintainer: Jose G. López <josgalo@gmail.com>
-Build-Depends: debhelper (>= 9), dh-autoreconf,
+Build-Depends: debhelper (>= 10), dh-autoreconf,
  pkg-config,
  libxml-parser-perl, libxml2-dev, intltool,
  libgtk2.0-dev,
- python, python-dev, python-gtk2-dev, python-cairo-dev, dh-python
+ python, python-dev, python-gtk2-dev, dh-python
 Standards-Version: 3.9.6
 Homepage: http://mooedit.sourceforge.net/
 Vcs-Git: https://gitlab.com/deb-pkg/medit.git
