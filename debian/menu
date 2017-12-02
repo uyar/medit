@@ -1,3 +1,0 @@
-?package(medit):needs="X11" section="Applications/Editors"\
-  title="medit"\
-  command="/usr/bin/medit"
