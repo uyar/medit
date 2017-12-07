@@ -1,3 +1,21 @@
+medit (1.2.0-3) unstable; urgency=medium
+
+  * debian/compat: update to 10.
+  * debian/control:
+    - Update to debhelper 10. Remove --parallel option.
+    - Bump to Standards-Version 4.1.2.
+      + Remove menu as menu system is deprecated (Policy >= 3.9.8)
+    - Drop unnecessary dh-autoreconf build-dependency.
+    - Drop python-cairo-dev build-dependency.
+      Thanks to Laurent Bigonville (Closes: #882221).
+  * debian/copyright:
+    - Convert to Machine-readable format.
+  * debian/rules:
+    - Use all hardening flags (DEB_BUILD_MAINT_OPTIONS = hardening=+all).
+    - Remove '--with autoreconf' option and don't delete *.pyc file.
+
+ -- Jose G. López <josgalo@gmail.com>  Thu, 07 Dec 2017 19:06:28 +0100
+
 medit (1.2.0-2) unstable; urgency=low
 
   * Migrate deprecated python-support to dh_python2 (Closes: #786239)
