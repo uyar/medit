@@ -9,20 +9,18 @@ DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 %:
-	dh $@ --with autoreconf,python2
+	dh $@ --with python2
 
 override_dh_auto_configure:
 	dh_auto_configure -- --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
 	--prefix=/usr
-
-override_dh_clean:
-	dh $@ --with autoreconf
-	#find $(CURDIR) -name '*.pyc' -type f -print0 | xargs -0 rm -f
 
 override_dh_auto_install:
 	dh_auto_install
 	chmod 755 debian/medit/usr/share/medit/language-specs/check.sh
 	find $(CURDIR)/debian/medit/ -type d -empty -delete
 
-override_dh_auto_test:
+override_dh_clean:
+	dh $@
 
+override_dh_auto_test:
